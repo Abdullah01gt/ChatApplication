@@ -33,6 +33,7 @@ RUN npm install --omit=dev --no-audit --no-fund && npm cache clean --force
 
 COPY --from=backend-build /app/dist ./dist
 COPY --from=frontend-build /app/frontend/dist ./public
+# Exposing the port 3001
 
 EXPOSE 3001
 USER node

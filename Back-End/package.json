@@ -7,8 +7,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf dist && cp -R src dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "@clerk/express": "^2.1.67",

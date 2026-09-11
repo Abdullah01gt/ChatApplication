@@ -4,6 +4,8 @@ import databaseConnection from "./db.js"
 import dns from 'node:dns';
 import {clerkMiddleware} from "@clerk/express"
 import cors from "cors"
+import fs from "fs"
+import path from "path";
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -16,6 +18,9 @@ const PORT = process.env.PORT
 const FRONTEND_URL = process.env.FRONTEND_URL
 const app = express()
 
+
+const publicDir = path.join(process.cwd(), "public")
+
 app.use(express.json())
 app.use(clerkMiddleware())
 app.use(cors(
@@ -24,6 +29,16 @@ app.use(cors(
     credentials: true
   }
 ))
+
+if(fs.existsSync(publicDir)){
+
+    app.use(express.static(publicDir))
+
+    app.get("/{*any}", (req,res,next) => {
+
+        res.sendFile(path.join(publicDir,"index.html"), (err) => next(err))
+    })
+}
 
 // health endpoint
 

@@ -7,7 +7,8 @@ import cors from "cors"
 import fs from "fs"
 import path from "path";
 import job from "./lib/cron.js";
-import clerkWebhook from "./webhooks/clerk.webook.js"
+import clerkWebhook from "./webhooks/clerk.webhook.js"
+import authRoutes from "./routes/auth.router.js"
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -52,6 +53,7 @@ app.get("/health", (req, res) => {
     res.status(200).json({ok : true})
 })
 
+app.use("/api/auth", authRoutes)
 
 
 

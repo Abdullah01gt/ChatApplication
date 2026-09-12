@@ -7,6 +7,7 @@ import cors from "cors"
 import fs from "fs"
 import path from "path";
 import job from "./lib/cron.js";
+import clerkWebhook from "./webhooks/clerk.webook.js"
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -21,6 +22,10 @@ const app = express()
 
 
 const publicDir = path.join(process.cwd(), "public")
+
+// Don't parse the webhook event data , it should be in raw format
+
+app.get("/api/webhooks/clerk", express.raw({type: "application/json"}), clerkWebhook)
 
 app.use(express.json())
 app.use(clerkMiddleware())

@@ -1,11 +1,12 @@
 import express from "express"
 import dotenv from "dotenv"
-import databaseConnection from "./db.js"
+import databaseConnection from "./lib/db.js"
 import dns from 'node:dns';
 import {clerkMiddleware} from "@clerk/express"
 import cors from "cors"
 import fs from "fs"
 import path from "path";
+import job from "./lib/cron.js";
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -50,5 +51,6 @@ app.get("/health", (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log("Server is Listening on port 3000")
+    console.log("Server is Listening on port 3000");
+    if(process.env.NODE_ENV=== "production") job.start;
 })

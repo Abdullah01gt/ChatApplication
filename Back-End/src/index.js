@@ -26,7 +26,7 @@ const publicDir = path.join(process.cwd(), "public")
 
 // Don't parse the webhook event data , it should be in raw format
 
-app.get("/api/webhooks/clerk", express.raw({type: "application/json"}), clerkWebhook)
+app.use("/api/webhooks/clerk", express.raw({type: "application/json"}), clerkWebhook)
 
 app.use(express.json())
 app.use(clerkMiddleware())

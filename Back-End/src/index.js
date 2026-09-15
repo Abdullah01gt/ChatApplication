@@ -10,6 +10,7 @@ import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js"
 import authRoutes from "./routes/auth.router.js"
 import messageRoutes from "./routes/message.router.js"
+import { app, server } from "./lib/socket.js";
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -20,7 +21,7 @@ databaseConnection()
 // Initializin port and FrontEnd Url
 const PORT = process.env.PORT
 const FRONTEND_URL = process.env.FRONTEND_URL
-const app = express()
+
 
 
 const publicDir = path.join(process.cwd(), "public")
@@ -59,7 +60,7 @@ app.use("/api/messages", messageRoutes)
 
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("Server is Listening on port 3000");
     if(process.env.NODE_ENV=== "production") job.start;
 })

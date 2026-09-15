@@ -9,6 +9,7 @@ import path from "path";
 import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js"
 import authRoutes from "./routes/auth.router.js"
+import messageRoutes from "./routes/message.router.js"
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
@@ -54,6 +55,7 @@ app.get("/health", (req, res) => {
 })
 
 app.use("/api/auth", authRoutes)
+app.use("/api/messages", messageRoutes)
 
 
 
